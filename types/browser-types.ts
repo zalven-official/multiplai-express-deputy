@@ -10,7 +10,7 @@ import {
 } from 'playwright';
 
 
-interface IBrowserActionState {
+export interface IBrowserActionState {
   url: string;
   pageTitle: string;
   screenshotPath?: string;
@@ -52,35 +52,43 @@ export interface IBrowserConfig {
   _forceKeepBrowserAlive?: boolean; // internal flag to keep the browser alive
 }
 
+export type SupportedBrowsers = 'chromium' | 'firefox' | 'webkit' | 'chrome';
+
+export interface BrowserUsed {
+  type: SupportedBrowsers | string
+  isExecutablePath?: boolean
+}
+
 
 export interface IBrowserManager {
-
-  browserType: BrowserType;
+  browser: BrowserUsed;
   state: IBrowserActionState;
   executablePath?: string;
   config: IBrowserConfig;
+}
 
+export interface IBrowserManagerConstructor {
   /**
     * Initializes the BrowserManager with the given browser type.
-    * @param browserType - The type of browser to initialize (e.g., 'chromium', 'firefox', etc.).
+    * @param SupportedBrowsers - The type of browser to initialize (e.g., 'chromium', 'firefox', etc.).
     * @param config - Optional configuration for the browser instance.
     * @returns The BrowserManager instance.
     */
-  new(browserType: BrowserType | string, config?: IBrowserConfig): IBrowserManager;
+  new(browser: SupportedBrowsers | string, config?: IBrowserConfig): IBrowserManager;
 
   /**
    * Detects browser type based on the executable path.
    * @param executablePath - The path to the browser executable.
    * @returns The detected browser type.
    */
-  detectBrowserType(executablePath: string): BrowserType
+  _detectBrowserType(executablePath: string): BrowserUsed
 
   /**
    * Returns the Playwright browser launcher for the given browser type.
    * @param browser - The browser type.
    * @returns The corresponding BrowserType.
    */
-  _getBrowserType(browser: BrowserType): BrowserType
+  _getBrowserType(browser: SupportedBrowsers): SupportedBrowsers
 
   /**
    * Sets up the browser using the Chrome DevTools Protocol (CDP) connection.
