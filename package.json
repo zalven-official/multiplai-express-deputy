@@ -1,0 +1,49 @@
+{
+  "name": "@multiplai-labs/web",
+  "version": "0.0.1",
+  "description": "Web Deputy is a cutting-edge framework that seamlessly integrates advanced AI capabilities with robust browser automation. Designed to empower AI agents, it enables intelligent, efficient, and error-free web interactions. By combining the best of AI decision-making with automated browser control, Web Deputy revolutionizes how applications navigate, interact, and extract data from the web, ensuring that complex tasks are handled with precision and speed.",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "engines": {
+    "node": "^23.8.0"
+  },
+  "scripts": {
+    "build": "tsc",
+    "preversion": "npm run build",
+    "version": "standard-version",
+    "postversion": "git push && git push --tags"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "keywords": [
+    "playwright",
+    "web",
+    "automation",
+    "browser",
+    "nodejs",
+    "typescript",
+    "web-voyager",
+    "agents",
+    "llm",
+    "openai",
+    "browser"
+  ],
+  "author": "Zalven Dayao zalvendayao888@gmail.com",
+  "license": "MIT",
+  "devDependencies": {
+    "@types/node": "^22.13.4",
+    "typescript": "^5.7.3"
+  },
+  "dependencies": {
+    "undici-types": "^6.20.0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/zalven-official/-multiplai-labs-web.git"
+  },
+  "bugs": {
+    "url": "https://github.com/zalven-official/-multiplai-labs-web/issues"
+  },
+  "homepage": "https://github.com/zalven-official/-multiplai-labs-web#readme"
+}
