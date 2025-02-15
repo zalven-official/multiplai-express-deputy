@@ -40,10 +40,10 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/zalven-official/-multiplai-labs-web.git"
+    "url": "git+https://github.com/zalven-official/multiplai-labs-web.git"
   },
   "bugs": {
-    "url": "https://github.com/zalven-official/-multiplai-labs-web/issues"
+    "url": "https://github.com/zalven-official/multiplai-labs-web/issues"
   },
-  "homepage": "https://github.com/zalven-official/-multiplai-labs-web#readme"
+  "homepage": "https://github.com/zalven-official/multiplai-labs-web#readme"
 }
