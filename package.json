@@ -1,5 +1,5 @@
 {
-  "name": "@multiplai-labs/web",
+  "name": "@multiplai-express/deputy",
   "version": "0.0.1",
   "description": "Web Deputy is a cutting-edge framework that seamlessly integrates advanced AI capabilities with robust browser automation. Designed to empower AI agents, it enables intelligent, efficient, and error-free web interactions. By combining the best of AI decision-making with automated browser control, Web Deputy revolutionizes how applications navigate, interact, and extract data from the web, ensuring that complex tasks are handled with precision and speed.",
   "main": "dist/index.js",
@@ -40,10 +40,10 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/zalven-official/multiplai-labs-web.git"
+    "url": "git+https://github.com/zalven-official/multiplai-express-deputy.git"
   },
   "bugs": {
-    "url": "https://github.com/zalven-official/multiplai-labs-web/issues"
+    "url": "https://github.com/zalven-official/multiplai-express-deputy/issues"
   },
-  "homepage": "https://github.com/zalven-official/multiplai-labs-web#readme"
+  "homepage": "https://github.com/zalven-official/multiplai-express-deputy#readme"
 }
