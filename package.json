@@ -8,6 +8,7 @@
     "node": "^23.8.0"
   },
   "scripts": {
+    "dev": "node index.ts",
     "build": "tsc",
     "preversion": "npm run build",
     "version": "standard-version",

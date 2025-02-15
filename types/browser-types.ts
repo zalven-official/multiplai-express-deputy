@@ -28,7 +28,6 @@ export type IProxySettings = {
 };
 
 
-
 export interface IBrowserConfig {
   // Basic configuration options
   cookiesFile?: string; // e.g., "path/to/cookies.json"
@@ -56,6 +55,7 @@ export type SupportedBrowsers = 'chromium' | 'firefox' | 'webkit' | 'chrome';
 
 export interface BrowserUsed {
   type: SupportedBrowsers | string
+  browser: BrowserType
   isExecutablePath?: boolean
 }
 
@@ -82,13 +82,6 @@ export interface IBrowserManagerConstructor {
    * @returns The detected browser type.
    */
   _detectBrowserType(executablePath: string): BrowserUsed
-
-  /**
-   * Returns the Playwright browser launcher for the given browser type.
-   * @param browser - The browser type.
-   * @returns The corresponding BrowserType.
-   */
-  _getBrowserType(browser: SupportedBrowsers): SupportedBrowsers
 
   /**
    * Sets up the browser using the Chrome DevTools Protocol (CDP) connection.
