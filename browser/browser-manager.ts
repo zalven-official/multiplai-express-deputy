@@ -16,7 +16,6 @@ const defaultBrowserConfig: IBrowserConfig = {
   headless: false,
   disableSecurity: true,
   extraChromiumArgs: [],
-  chromeInstancePath: null,
   wssUrl: null,
   cdpUrl: null,
   proxy: null,
@@ -43,7 +42,7 @@ export class BrowserManager implements IBrowserManager {
 
   _detectBrowserType(browserType: SupportedBrowsers | string): BrowserUsed {
     const lowerType = String(browserType).toLowerCase();
-    let type: SupportedBrowsers = 'chromium';
+    let type: SupportedBrowsers | string = 'chromium';
     let browser: BrowserType = chromium;
     if (lowerType.includes('chrome') || lowerType.includes('chromium')) {
       type = 'chromium';
@@ -58,6 +57,7 @@ export class BrowserManager implements IBrowserManager {
       browser = webkit;
     }
     const isExecutablePath = checkExecutablePath(browserType);
+    type = isExecutablePath ? browserType : type
     return { type, isExecutablePath, browser };
   }
 
@@ -76,8 +76,9 @@ export class BrowserManager implements IBrowserManager {
   }
 
   async _setupBrowserWithInstance(): Promise<Browser> {
-    if (!this.config.chromeInstancePath) {
-      throw new Error('Chrome instance path is required');
+    const execPath = this.browser.type;
+    if (!execPath || typeof execPath !== 'string') {
+      throw new Error('Invalid browser path');
     }
     const endpointVersionUrl = 'http://localhost:9222/json/version';
     const endpointUrl = 'http://localhost:9222';
@@ -88,9 +89,9 @@ export class BrowserManager implements IBrowserManager {
         return browser;
       }
     } catch (error) {
-      console.debug('No existing Chrome instance found, starting a new one');
+      //'No existing Chrome instance found, starting a new one'
     }
-    spawn(this.config.chromeInstancePath, [
+    spawn(execPath, [
       '--remote-debugging-port=9222',
       ...(this.config.extraChromiumArgs ?? []),
     ], { stdio: 'ignore', detached: true }
@@ -111,12 +112,12 @@ export class BrowserManager implements IBrowserManager {
       const browser = await chromium.connectOverCDP(endpointUrl, { timeout: 20000 });
       return browser;
     } catch (error: any) {
-      console.error(`Failed to start a new Chrome instance: ${error.message}`);
       throw new Error(
         'To start Chrome in Debug mode, you need to close all existing Chrome instances and try again otherwise we cannot connect to the instance.'
       );
     }
   }
+
 
   async _setupStandardBrowser(): Promise<Browser> {
     const launchOptions: any = {
@@ -160,7 +161,7 @@ export class BrowserManager implements IBrowserManager {
         return await this._setupCDP();
       } else if (this.config.wssUrl) {
         return await this._setupWSS();
-      } else if (this.config.chromeInstancePath) {
+      } else if (this.browser.isExecutablePath) {
         return await this._setupBrowserWithInstance();
       } else {
         return await this._setupStandardBrowser();
@@ -286,7 +287,8 @@ export class BrowserManager implements IBrowserManager {
         try {
           await page.close();
         } catch (err) {
-          console.warn('Error closing a page:', err);
+          // Error closing a page
+          continue
         }
       }
       this.state.pages = [];

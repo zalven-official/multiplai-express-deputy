@@ -48,6 +48,7 @@
     "@langchain/mistralai": "^0.2.0",
     "@langchain/openai": "^0.4.4",
     "cryptr": "^6.3.0",
+    "ps-list": "^8.1.1",
     "undici-types": "^6.20.0"
   },
   "repository": {

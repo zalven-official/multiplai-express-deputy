@@ -20,6 +20,37 @@ export interface IBrowserActionState {
 }
 
 /**
+ * Interface representing a browser instance with remote debugging enabled.
+ */
+export interface IBrowserInstance {
+  executablePath: string;
+  port: number;
+}
+/**
+ * Class to find and return details of opened browser instances
+ * that have been started with the `--remote-debugging-port` flag.
+ */
+export interface IBrowserInstanceFinder {
+  /**
+   * Extracts the executable path from a command line string.
+   * This function handles quoted paths as well as unquoted ones.
+   *
+   * @param cmd - The command line string of the process.
+   * @returns The extracted executable path.
+   */
+  _extractExecutablePath(cmd: string): string
+
+  /**
+    * Scans all running processes and returns the browser instances that
+    * were launched with the `--remote-debugging-port` flag.
+    *
+    * @returns A promise resolving to an array of IBrowserInstance objects.
+    */
+  instances(): Promise<IBrowserInstance[]>;
+}
+
+
+/**
  * Local definition for proxy settings.
  */
 export type IProxySettings = {
@@ -43,7 +74,6 @@ export interface IBrowserConfig {
   headless?: boolean; // run browser in headless mode (default: true)
   disableSecurity?: boolean; // disable security features (default: true)
   extraChromiumArgs?: string[]; // extra CLI arguments for Chromium
-  chromeInstancePath?: string | null; // path to an existing Chrome instance
   wssUrl?: string | null; // WebSocket URL for remote browser
   cdpUrl?: string | null; // CDP URL for remote browser
   proxy?: IProxySettings | null; // proxy settings
